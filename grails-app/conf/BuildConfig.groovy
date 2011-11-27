@@ -11,4 +11,15 @@ grails.project.dependency.resolution = {
     }
     dependencies {
     }
+    plugins{
+        test ":spock:0.5-groovy-1.7"
+        build ":codenarc:0.16.1"
+    }
+    
+    codenarc.reports = {
+        StockAnalysis('html') { 
+            outputFile = 'CodeNarc-Report.html' 
+            title = 'Stock installation CodeNarc Report' 
+        }
+    }
 }
