@@ -24,7 +24,13 @@ class JQueryProviderIntegrationSpec extends IntegrationSpec {
     }
     
     // the buildCallback() helper method should probably be private 
-    def "verify that remote function works in happy case"(){
-        
+    // I have no idea what taglib to pass, as line 186 of 
+    // groovy/org/codehaus/groovy/grails/plugins/web/taglib/JavascriptTagLib.groovy
+    // references an "owner" that is apparently referenced nowhere else in the document 
+    def "verify that remote function works in happy case -- INCOMPLETE"(){
+        when: "we try to execute a remote function"
+            def test = new JQueryProvider().doRemoteFunction()
+        then: "the resultant jQuery should look like standard AJAX"
+            test == ""
     }
 }
