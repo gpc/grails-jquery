@@ -21,6 +21,7 @@ import org.codehaus.groovy.grails.plugins.web.taglib.JavascriptProvider
 /**
  * @author Sergey Nebolsin (nebolsin@prophotos.ru)
  * @author Finn Herpich (finn.herpich <at> marfinn-software <dot> de)
+ * @author Manuel Boillod
  */
 class JQueryProvider implements JavascriptProvider {
 	/**
@@ -127,7 +128,7 @@ class JQueryProvider implements JavascriptProvider {
 			out << ','
 
 		//*** success
-		out << 'success:function(data,textStatus){'
+		out << 'success:function(data,textStatus,XMLHttpRequest){'
 
 		if(attrs.onLoaded)
 			out << "${attrs.onLoaded};"
@@ -162,6 +163,33 @@ class JQueryProvider implements JavascriptProvider {
 
 		if(attrs.onComplete)
 			out << ",complete:function(XMLHttpRequest,textStatus){${attrs.onComplete}}"
+			
+		//*** on_ERROR_CODE
+		boolean hasOnStatusCodes = false
+		attrs.each { k, v ->
+			def statusMatch = k =~ /^on(\d{3})$/
+			if (statusMatch.matches()){
+				//new status code
+				if (hasOnStatusCodes){
+					out << ","
+				} else {
+					out << ",statusCode: {"
+					hasOnStatusCodes = true
+				}
+				int status = statusMatch[0][1] as int
+				//All success 2xx codes and not modified 304 code
+				if ( status >= 200 && status < 300 || status == 304 ) {
+					//success parameters
+					out << "${status}:function(data,textStatus,XMLHttpRequest){${v}}"
+				} else {
+					//error parameters
+					out << "${status}:function(XMLHttpRequest,textStatus,errorThrown){${v}}"
+				}
+			}
+		}
+		if (hasOnStatusCodes){
+			out << "}"
+		}
 	}
 
 	/**
