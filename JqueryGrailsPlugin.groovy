@@ -44,7 +44,10 @@ class JqueryGrailsPlugin {
 	def authorEmail = "nebolsin@gmail.com, craigjones@maximsc.com, marc@grailsrocks.com and finn.herpich@marfinn-software.de"
 	def title = "JQuery for Grails"
 	def description = "Provides integration for the JQuery library with grails JavascriptProvider"
-	def documentation = "http://grails.org/JQuery+Plugin"
+	def documentation = "http://grails.org/plugin/jquery"
+	def license = "APACHE"
+	def issueManagement = [ system: "JIRA", url: "http://jira.grails.org/browse/GPJQUERY" ]
+	def scm = [ url: "https://github.com/gpc/grails-jquery" ]
 
 	static jQueryVersion
 	static jQuerySources
