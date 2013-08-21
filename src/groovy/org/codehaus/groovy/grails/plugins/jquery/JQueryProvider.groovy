@@ -23,6 +23,22 @@ import org.codehaus.groovy.grails.plugins.web.taglib.JavascriptProvider
  * @author Finn Herpich (finn.herpich <at> marfinn-software <dot> de)
  */
 class JQueryProvider implements JavascriptProvider {
+
+	/**
+	 * encodeParamValue creates a JSON encoded param
+	 *
+	 * @param value
+	 *
+	 * @return the JSON representation of the value
+	 */
+	def encodeParamValue(value) {
+	    if (value instanceof List) {
+			"[ " + value.collect { encodeParamValue(it) }.join(',') + " ]"
+	    } else {
+			"'" + "$value".encodeAsJavaScript() + "'"
+	    }
+	}
+
 	/**
 	 * doRemoteFunction creates a jQuery-AJAX-Call
 	 *
@@ -67,11 +83,7 @@ class JQueryProvider implements JavascriptProvider {
 				if(attrs?.params instanceof Map) {
 					hasParams = true
 					out << attrs.remove('params').collect { k, v ->
-						"\'" +
-								"${k}".encodeAsJavaScript() +
-								"\': \'" +
-								"${v}".encodeAsJavaScript() +
-								"\'"
+						"'" + "${k}".encodeAsJavaScript() + "': " + encodeParamValue(v)
 					}.join(",")
 				}
 
@@ -80,11 +92,7 @@ class JQueryProvider implements JavascriptProvider {
 						out << ","
 
 					out << attrs.remove('jsParams').collect { k, v ->
-						"\'" +
-								"${k}".encodeAsJavaScript() +
-								"\': \'" +
-								"${v}".encodeAsJavaScript() +
-								"\'"
+						"'" + "${k}".encodeAsJavaScript() + "': " + encodeParamValue(v)
 					}.join(",")
 				}
 
