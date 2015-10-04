@@ -23,7 +23,7 @@ import org.codehaus.groovy.grails.plugins.web.taglib.JavascriptTagLib
 class JqueryGrailsPlugin {
 	// Only change the point release. Edit o.c.g.g.o.j.JQueryConfig.SHIPPED_VERSION when changing jQuery resource version
 	// This should match JQueryConfig.SHIPPED_VERSION but must be a literal here due to how AstPluginDescriptorReader parses this file
-	def version = "1.11.1-SNAPSHOT"
+	def version = "2.1.4"
 
 	static SHIPPED_SRC_DIR = 'jquery'
 
