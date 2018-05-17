@@ -26,7 +26,7 @@ class JQueryConfig implements GrailsApplicationAware {
     def defaultPlugins
     def plugins = [:]
 
-    static SHIPPED_VERSION = '1.11.1'
+    static SHIPPED_VERSION = '3.2.1'
     GrailsApplication grailsApplication
 
     def init() {
